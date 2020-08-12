@@ -1,5 +1,5 @@
 # Atomex.tz
-[![Build Status](https://travis-ci.org/atomex-me/atomex-NYX-ligo.svg?branch=master)](https://travis-ci.org/atomex-me/atomex-NYX-ligo)
+[![Build Status](https://travis-ci.org/atomex-me/atomex-nyx-ligo.svg?branch=master)](https://travis-ci.org/atomex-me/atomex-nyx-ligo)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-green.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 Atomex protocol implementation for the Tezos Approvable Ledger (see [NYX standard](https://gitlab.com/equisafe/nyx/-/blob/master/readme.org))
