@@ -24,40 +24,40 @@ end
 
 type storage is big_map(bytes, swapState);
 
-function getSwapState(const hashedSecret: bytes; const s: storage) : swapState is
+[@inline] function getSwapState(const hashedSecret: bytes; const s: storage) : swapState is
   case s[hashedSecret] of
     | Some(state) -> state
     | None -> (failwith("no swap for such hash") : swapState)
-  end; attributes ["inline"];
+  end;
 
-function getTransferEntry(const tokenAddress: address) : contract(transferParam) is
+[@inline] function getTransferEntry(const tokenAddress: address) : contract(transferParam) is
   case (Tezos.get_entrypoint_opt("%transfer", tokenAddress) : option(contract(transferParam))) of
     | Some(entry) -> entry
     | None -> (failwith("expected transfer entrypoint") : contract(transferParam))
-  end; attributes ["inline"];
+  end;
 
-function getTransferFromEntry(const tokenAddress: address) : contract(transferFromParam) is
+[@inline] function getTransferFromEntry(const tokenAddress: address) : contract(transferFromParam) is
   case (Tezos.get_entrypoint_opt("%transferFrom", tokenAddress) : option(contract(transferFromParam))) of
     | Some(entry) -> entry
     | None -> (failwith("expected transferFrom entrypoint") : contract(transferFromParam))
-  end; attributes ["inline"];
+  end;
 
-function transfer(const transferEntry: contract(transferParam); 
+[@inline] function transfer(const transferEntry: contract(transferParam); 
                   const dst: address; 
                   const value: nat) : operation is
   block {
     const params: transferParam = list[(value, dst)];
     const op: operation = Tezos.transaction(params, 0tz, transferEntry);
-  } with op; attributes ["inline"];
+  } with op;
 
-function transferFrom(const transferFromEntry: contract(transferFromParam); 
+[@inline] function transferFrom(const transferFromEntry: contract(transferFromParam); 
                   const src: address;
                   const dst: address; 
                   const value: nat) : operation is
   block {
     const params: transferFromParam = list[((value, src), dst)];
     const op: operation = Tezos.transaction(params, 0tz, transferFromEntry);
-  } with op; attributes ["inline"];
+  } with op;
 
 function doInitiate(const initiate: initiateParam; var s: storage) : (list(operation) * storage) is 
   block {
